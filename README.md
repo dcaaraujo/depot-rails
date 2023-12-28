@@ -4,6 +4,6 @@ This is my implementation of the Depot application in [Agile Web Development wit
 
 ## Requirements
 
-* Rails 7.1
-* Ruby 3.2.2
+* Rails 7.1.2
+* Ruby 3.3.0
 * SQLite 3
