@@ -11,3 +11,9 @@ two:
   description: MyText
   image_url: pride_and_prejudice.jpg
   price: 9.99
+
+ruby:
+  title: Programming Ruby
+  description: Programming Ruby description
+  image_url: pride_and_prejudice.jpg
+  price: 49.50
