@@ -34,11 +34,11 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "image url" do
-    %w{ fred.gif fred.jpg fred.png FRED.JPG http://a.b.c/x/y/z/fred.gif }.each do |image_url|
+    %w[fred.gif fred.jpg fred.png FRED.JPG http://a.b.c/x/y/z/fred.gif].each do |image_url|
       assert new_product(image_url).valid?, "#{image_url} must be valid"
     end
 
-    %w{ fred.doc fred.gif.more }.each do |image_url|
+    %w[fred.doc fred.gif.more].each do |image_url|
       assert new_product(image_url).invalid?, "#{image_url} must be invalid"
     end
   end
