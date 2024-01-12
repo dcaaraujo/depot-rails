@@ -56,12 +56,12 @@ class ProductTest < ActiveSupport::TestCase
 
   private
 
-  def new_product(image_url)
-    Product.new(
-      title: "My Book Title",
-      description: "My Book Title description",
-      price: 1,
-      image_url: image_url
-    )
-  end
+    def new_product(image_url)
+      Product.new(
+        title: "My Book Title",
+        description: "My Book Title description",
+        price: 1,
+        image_url: image_url
+      )
+    end
 end

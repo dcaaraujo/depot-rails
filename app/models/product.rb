@@ -13,10 +13,10 @@ class Product < ApplicationRecord
 
   private
 
-  def ensure_not_referenced_by_any_line_items
-    unless line_items.empty?
-      errors.add(:base, "Line items present")
-      throw :abort
+    def ensure_not_referenced_by_any_line_items
+      unless line_items.empty?
+        errors.add(:base, "Line items present")
+        throw :abort
+      end
     end
-  end
 end
