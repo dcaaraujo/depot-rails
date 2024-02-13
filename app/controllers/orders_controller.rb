@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  skip_before_action :authorize, only: %i[ new create ]
   include CurrentCart
 
   before_action :set_cart, only: %i[ new create ]
@@ -33,7 +34,7 @@ class OrdersController < ApplicationController
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
         ChargeOrderJob.perform_later(@order, pay_type_params.to_h)
-        format.html { redirect_to store_index_url(locale: I18n.locale), notice: I18n.t('.thanks') }
+        format.html { redirect_to store_index_url(locale: I18n.locale), notice: I18n.t(".thanks") }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -57,7 +58,7 @@ class OrdersController < ApplicationController
 
   # DELETE /orders/1 or /orders/1.json
   def destroy
-    @order.destroy!
+    @order.destroy
 
     respond_to do |format|
       format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
@@ -76,19 +77,20 @@ class OrdersController < ApplicationController
       params.require(:order).permit(:name, :address, :email, :pay_type)
     end
 
-    def ensure_cart_isnt_empty
-      if @cart.line_items.empty?
-        redirect_to store_index_url, notice: "Your cart is empty"
-      end
-    end
+  private
+
+     def ensure_cart_isnt_empty
+       if @cart.line_items.empty?
+         redirect_to store_index_url, notice: "Your cart is empty"
+       end
+     end
 
     def pay_type_params
-      case order_params[:pay_type]
-      when "Credit card"
+      if order_params[:pay_type] == "Credit card"
         params.require(:order).permit(:credit_card_number, :expiration_date)
-      when "Check"
+      elsif order_params[:pay_type] == "Check"
         params.require(:order).permit(:routing_number, :account_number)
-      when "Purchase order"
+      elsif order_params[:pay_type] == "Purchase order"
         params.require(:order).permit(:po_number)
       else
         {}

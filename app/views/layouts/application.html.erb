@@ -6,11 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
     <header class="bg-green-700">
       <aside data-controller="locale">
@@ -23,15 +21,14 @@
     </header>
     <section class="flex">
       <nav class="bg-green-900 p-6">
-        <%= render partial: 'layouts/cart', locals: { cart: @cart } %>
-
+        <%= render partial: "layouts/cart", locals: { cart: @cart } %>
         <ul class="text-gray-300 leading-8">
           <li><a href="/"><%= t(".home") %></a></li>
           <li><a href="/questions"><%= t(".questions") %></a></li>
           <li><a href="/news"><%= t(".news") %></a></li>
           <li><a href="/contact"><%= t(".contact") %></a></li>
         </ul>
-        <% if user_logged_in? %>
+        <% if session[:user_id] %>
           <hr class="my-2">
           <ul class="text-gray-300 leading-8">
             <li><%= link_to "Orders", orders_path %></li>
@@ -41,7 +38,7 @@
           </ul>
         <% end %>
       </nav>
-      <main class="container mx-auto mt-28 px-5 flex">
+      <main class="container mx-auto mt-4 px-5 flex">
         <%= yield %>
       </main>
     </section>
